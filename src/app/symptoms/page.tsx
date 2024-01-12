@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 function buildQuery(symptoms: string[]) {
-  return '/conditions?' + symptoms.map(s => 'symptom=' + s).join('&');
+  return `/conditions?${symptoms.map(s => `symptom=${s}`).join('&')}`;
 }
 
 export default function Symptoms() {

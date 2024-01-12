@@ -15,7 +15,7 @@ export default async function Conditions({
 
   return (
     <main className="flex min-h-screen flex-col justify-center p-24">
-      <div className="text-2xl my-2">
+      <div className="text-4xl my-2">
         <Link
           href='/symptoms'
           className="px-2 mr-4 text-2xl rounded-md bg-neutral-200 self-start"

@@ -1,5 +1,6 @@
 import { fetchDrugs } from "../lib/data"
 import Drug from "./drug";
+import DrugList from "./drug-list";
 
 type ConditionProps = {
   conditionName: string,
@@ -22,17 +23,9 @@ export default async function Condition({
           symptoms.map(symptom => <div key={symptom}>{symptom}</div>)
         }
       </div>
-      <div className="flex">
-        {
-          drugs.map(drug => {
-          return (
-            <Drug
-              drugName="drug"
-              key={drug}
-            />);
-          })
-        }
-      </div>
+      <DrugList
+        drugs={drugs}
+      />
     </div>
   )
 }
