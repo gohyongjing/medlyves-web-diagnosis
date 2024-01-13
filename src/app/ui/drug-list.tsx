@@ -34,7 +34,7 @@ export default function DrugList({drugs}: DrugListProps) {
       }
       <button
         onClick={() => setIsOpen(prev => !prev)}
-        className="text-blue-500 underline hover:text-blue-600"  
+        className="text-sky-500 underline hover:text-sky-600"  
       >
         {isOpen ? 'Hide':'Show'} details
       </button>

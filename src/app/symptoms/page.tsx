@@ -22,7 +22,7 @@ export default function Symptoms() {
       </select>
       <Link
         href={buildQuery(selected)}
-        className="m-4 py-2 px-4 text-lg border-2 rounded-md bg-sky-500 text-neutral-50 hover:bg-sky-600"
+        className="m-4 py-2 px-4 text-lg rounded-md bg-sky-500 text-neutral-50 hover:bg-sky-600"
       >
         Diagnose
       </Link>
