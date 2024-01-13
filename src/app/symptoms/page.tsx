@@ -8,7 +8,7 @@ function buildQuery(symptoms: string[]) {
 }
 
 export default function Symptoms() {
-  const [selected, setSelected] = useState(['abc', 'def', 'sadf']);
+  const [selected, setSelected] = useState(['chills', 'high fever', 'headache']);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 text-center">

@@ -1,7 +1,21 @@
 import axios from "axios";
+import { sql } from '@vercel/postgres';
+import { Condition } from "./definitions";
 
-export async function fetchConditions(symptoms: string[]) {
-  return ['Pneumonia', 'Allergy', 'Common Cold', 'New Disease'];
+export async function fetchConditions(symptoms: string[]): Promise<Condition[]> {
+  try {
+    const nestedConditions = await Promise.all(symptoms.map(async symptom => {
+      const data = await sql<Condition>`
+        SELECT * FROM conditions
+        WHERE symptom = ${symptom};
+      `;
+      return data.rows;
+    }));
+    return nestedConditions.flat();
+  } catch (error) {
+    console.log('Error:', error);
+    return [];
+  }
 }
 
 export async function fetchDrugs(condition: string): Promise<string[]> {

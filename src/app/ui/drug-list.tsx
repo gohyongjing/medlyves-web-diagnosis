@@ -12,30 +12,32 @@ export default function DrugList({drugs}: DrugListProps) {
 
   return (
     <div>
+      {
+        !isOpen
+        ? <></>
+        : (
+          drugs.length == 0
+          ? <div className="my-2">
+            No drugs available. Please consult a doctor for alternative forms of treatment
+          </div>
+          : <div className="my-2 flex flex-wrap items-start gap-2">
+            {
+              drugs.map(drug => (
+                <Drug
+                  drugName={drug}
+                  key={drug}
+                />
+              ))
+            }
+          </div>
+        )
+      }
       <button
         onClick={() => setIsOpen(prev => !prev)}
         className="text-blue-500 underline hover:text-blue-600"  
       >
         {isOpen ? 'Hide':'Show'} details
       </button>
-      <div className="flex flex-wrap items-start">
-        {
-          isOpen
-          ? (
-              drugs.length == 0
-              ? 'No drugs available. Please consult a doctor for alternative forms of treatment'
-              : drugs.map(drug => {
-                return (
-                  <Drug
-                    drugName={drug}
-                    key={drug}
-                  />
-                );
-              })
-            )
-          : <></>
-        }
-      </div>
     </div>
   );
 }

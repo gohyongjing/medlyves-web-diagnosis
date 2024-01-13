@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { fetchConditions } from "../lib/data";
 import Condition from "../ui/condition";
+import { rankByRelevance } from "../lib/utils";
 
 function parseSymptoms(rawSymptoms: string | string[] | undefined) {
   return Array.isArray(rawSymptoms) ? rawSymptoms : []; 
@@ -11,7 +12,8 @@ export default async function Conditions({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const conditions = await fetchConditions(parseSymptoms(searchParams['symptom']));
+  const rawConditions = await fetchConditions(parseSymptoms(searchParams['symptom']));
+  const conditions = rankByRelevance(rawConditions);
 
   return (
     <main className="flex min-h-screen flex-col justify-center p-24">
@@ -33,7 +35,10 @@ export default async function Conditions({
             return (
               <Condition
                 conditionName={condition}
-                symptoms={[]}
+                symptoms={rawConditions
+                  .filter(entry => entry.condition == condition)
+                  .map(entry => entry.symptom)
+                }
                 key={condition}  
               />
             );
