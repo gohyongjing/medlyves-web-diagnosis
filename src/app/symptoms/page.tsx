@@ -2,7 +2,6 @@ import SymptomSearch from "../ui/symptom/symptom-search";
 import SymptomSelect from "../ui/symptom/symptom-select";
 import { Suspense } from "react";
 import { parseParams } from "../lib/utils";
-import Symptom from "../ui/symptom/symptom";
 import SymptomSelectSkeleton from "../ui/symptom/symptom-select-skeleton";
 import NextButton from "../ui/buttons/next-button";
 import ClosableSymptom from "../ui/symptom/closable-symptom";
@@ -22,7 +21,7 @@ export default function Symptoms({
       <div className="m-2 text-4xl">
         What are your symptoms?
       </div>
-      <div className="my-4 flex gap-2 flex-wrap">
+      <div className="my-4 self-start flex justify-start gap-2 flex-wrap">
         {
           symptoms.map(symptom => (
             <ClosableSymptom

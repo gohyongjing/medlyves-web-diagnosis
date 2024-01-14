@@ -13,7 +13,7 @@ export default function ShowMoreButton({limit}: {limit: number}) {
     setClicked(true);
     const params = new URLSearchParams(searchParams);
     params.set('limit', (limit + 20).toString());
-    replace(`${pathName}?${params.toString()}`);
+    replace(`${pathName}?${params.toString()}`, {scroll: false});
   }
 
   return (clicked

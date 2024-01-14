@@ -24,7 +24,7 @@ export default async function Condition({
           symptoms.map(symptom => (
             <Symptom
               key={symptom} 
-              symptomName={symptom}
+              symptomName={symptom.replaceAll('_', ' ')}
             />
           ))
         }
