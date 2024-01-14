@@ -19,7 +19,7 @@ export default function SymptomOption({option}: {option: string}) {
     replace(`${pathName}?${params.toString()}`);
   }
 
-  return <div className="flex justify-stretch items-stretch">
+  return <div className="flex justify-stretch items-stretch hover:bg-sky-200">
     <Checkbox.Root
       checked={searchParams.getAll('symptom').includes(option)}
       onCheckedChange={handleCheckedChange}
@@ -30,7 +30,7 @@ export default function SymptomOption({option}: {option: string}) {
         <CheckIcon className="text-neutral-500"/>
       </Checkbox.Indicator>
     </Checkbox.Root>
-    <label htmlFor={option} className="flex-1 text-start">
+    <label htmlFor={option} className="flex-1 text-start cursor-pointer">
       {option.replaceAll('_', ' ')}
     </label>
   </div>;

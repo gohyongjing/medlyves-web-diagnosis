@@ -68,6 +68,8 @@ export default defineConfig({
     // },
   ],
 
+  expect: { timeout: 10000 },
+
   /* Run your local dev server before starting the tests */
   // webServer: {
   //   command: 'npm run start',

@@ -8,7 +8,7 @@ type SymptomSelectProps = {
 }
 
 export default async function SymptomSelect({query, limit}: SymptomSelectProps) {
-  const options = (await fetchSymptoms(query, limit)).map(s => s.symptom);
+  const options = (await fetchSymptoms(query.replaceAll(' ', '_'), limit)).map(s => s.symptom);
 
   return <div className="w-full h-48 overflow-y-scroll flex flex-col gap-1 rounded-b-md bg-gray-50">
     {options.length == 0

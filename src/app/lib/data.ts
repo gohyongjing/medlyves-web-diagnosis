@@ -2,6 +2,13 @@ import axios from "axios";
 import { sql } from '@vercel/postgres';
 import { Condition } from "./definitions";
 
+/**
+ * Fetches a specified number of symptoms based on a query
+ *
+ * @param query A substring of a symptom to query the database.
+ * @param limit The maximum number of symptoms to retrieve.
+ * @returns An arraya of symptoms.
+ */
 export async function fetchSymptoms(query: string, limit: number = 20) {
   try {
     const data = await sql<{symptom: string}>`

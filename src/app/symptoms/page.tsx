@@ -5,6 +5,7 @@ import { parseParams } from "../lib/utils";
 import Symptom from "../ui/symptom/symptom";
 import SymptomSelectSkeleton from "../ui/symptom/symptom-select-skeleton";
 import NextButton from "../ui/buttons/next-button";
+import ClosableSymptom from "../ui/symptom/closable-symptom";
 
 export default function Symptoms({
   searchParams
@@ -21,12 +22,12 @@ export default function Symptoms({
       <div className="m-2 text-4xl">
         What are your symptoms?
       </div>
-      <div className="flex gap-2 flex-wrap">
+      <div className="my-4 flex gap-2 flex-wrap">
         {
           symptoms.map(symptom => (
-            <Symptom
+            <ClosableSymptom
               key={symptom} 
-              symptomName={symptom}
+              symptom={symptom}
             />
           ))
         }

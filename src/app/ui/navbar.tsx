@@ -6,7 +6,7 @@ export default function NavBar() {
     <Link href={'/'} className="flex items-center gap-2 text-sky-500 hover:text-sky-600">
       <CardStackPlusIcon className="w-8 h-8"/>
       <b>
-        Web Doc
+        Web Doctor
       </b>
     </Link>
   </nav>;
