@@ -14,7 +14,7 @@ export default async function Conditions({
   const backHref = `/symptoms?${new URLSearchParams(symptoms.map(s => ['symptom', s]))}`;
 
   return (
-    <main className="flex min-h-screen flex-col justify-center p-24">
+    <main className="flex min-h-screen flex-col justify-center px-4 py-24 sm:p-24">
       <div className="flex items-center text-4xl my-2">
         <BackButton
           href={backHref}

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-24 text-center">
       <div className="my-8 text-4xl">
         Welcome to <Link href='/' className="text-sky-500"><b>Web Doctor</b></Link>, our web diagnosis platform!
       </div>

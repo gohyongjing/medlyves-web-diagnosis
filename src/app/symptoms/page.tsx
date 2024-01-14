@@ -17,7 +17,7 @@ export default function Symptoms({
   const nextHref = `/conditions?${new URLSearchParams(symptoms.map(s => ['symptom', s]))}`;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-24 sm:p-24 text-center">
       <div className="m-2 text-4xl">
         What are your symptoms?
       </div>
@@ -38,7 +38,7 @@ export default function Symptoms({
           limit={limit}
         />
       </Suspense>
-      <NextButton href={nextHref} />
+      <NextButton href={nextHref} disabled={symptoms.length == 0}/>
     </main>
     );
 }
