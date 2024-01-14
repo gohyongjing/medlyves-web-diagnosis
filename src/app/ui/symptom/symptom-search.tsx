@@ -12,6 +12,7 @@ export default function SymptomSearch() {
   const handleTextChange = useDebouncedCallback((e: ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
     const params = new URLSearchParams(searchParams);
+    params.set('limit', String(20));
     if (term) {
       params.set('query', term);
     } else {

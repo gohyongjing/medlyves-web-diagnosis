@@ -2,13 +2,13 @@ import axios from "axios";
 import { sql } from '@vercel/postgres';
 import { Condition } from "./definitions";
 
-export async function fetchSymptoms(query: string) {
+export async function fetchSymptoms(query: string, limit: number = 20) {
   try {
     const data = await sql<{symptom: string}>`
       SELECT DISTINCT symptom FROM conditions
-      WHERE symptom ILIKE ${`${query}%`}
+      WHERE symptom ILIKE ${`%${query}%`}
       ORDER BY symptom
-      LIMIT 10;
+      LIMIT ${limit};
     `;
     return data.rows;
   } catch (error) {

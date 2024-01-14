@@ -3,7 +3,7 @@ const shimmer =
 
 export default async function SymptomSelectSkeleton() {
 
-  return <div className="w-full max-h-48 overflow-y-scroll flex flex-col gap-1 rounded-b-md bg-gray-50">
+  return <div className="w-full h-48 overflow-y-scroll flex flex-col gap-1 rounded-b-md bg-gray-50">
     <span className={`${shimmer} text-neutral-500`}>
       loading...
     </span>

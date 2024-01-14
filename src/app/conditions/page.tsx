@@ -1,21 +1,23 @@
 import { fetchConditions } from "../lib/data";
 import Condition from "../ui/condition";
 import { parseParams, rankByRelevance } from "../lib/utils";
-import BackButton from "../ui/back-button";
+import BackButton from "../ui/buttons/back-button";
 
 export default async function Conditions({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const rawConditions = await fetchConditions(parseParams(searchParams['symptom']));
+  const symptoms = parseParams(searchParams['symptom']);
+  const rawConditions = await fetchConditions(symptoms);
   const conditions = rankByRelevance(rawConditions);
+  const backHref = `/symptoms?${new URLSearchParams(symptoms.map(s => ['symptom', s]))}`;
 
   return (
     <main className="flex min-h-screen flex-col justify-center p-24">
       <div className="flex items-center text-4xl my-2">
         <BackButton
-          href="/symptoms"
+          href={backHref}
           label="Back"
         />
         {conditions.length} condition{conditions.length > 1 ? 's' : ''} found
