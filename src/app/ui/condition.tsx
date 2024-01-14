@@ -1,7 +1,7 @@
 import { fetchDrugs } from "../lib/data"
 import Drug from "./drug";
 import DrugList from "./drug-list";
-import Symptom from "./symptom";
+import Symptom from "./symptom/symptom";
 
 type ConditionProps = {
   conditionName: string,

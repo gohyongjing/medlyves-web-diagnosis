@@ -2,6 +2,21 @@ import axios from "axios";
 import { sql } from '@vercel/postgres';
 import { Condition } from "./definitions";
 
+export async function fetchSymptoms(query: string) {
+  try {
+    const data = await sql<{symptom: string}>`
+      SELECT DISTINCT symptom FROM conditions
+      WHERE symptom ILIKE ${`${query}%`}
+      ORDER BY symptom
+      LIMIT 10;
+    `;
+    return data.rows;
+  } catch (error) {
+    console.error('Error:', error);
+    return [];
+  }
+}
+
 /**
  * Fetches all condition symptom pairs from the database that involves any of the
  * specified symptoms.

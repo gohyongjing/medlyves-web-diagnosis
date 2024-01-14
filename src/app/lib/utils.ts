@@ -1,5 +1,14 @@
 import { Condition } from "./definitions";
 
+export function parseParams(rawParams: string | string[] | undefined): string[] {
+  if (Array.isArray(rawParams)) {
+    return rawParams;
+  } else if (typeof rawParams === 'string') {
+    return [rawParams]
+  }
+  return []; 
+}
+
 /**
  * Ranks the list of conditions based on number of symptoms present.
  *

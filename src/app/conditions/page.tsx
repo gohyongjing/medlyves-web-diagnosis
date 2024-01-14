@@ -1,21 +1,14 @@
-import Link from "next/link";
 import { fetchConditions } from "../lib/data";
 import Condition from "../ui/condition";
-import { rankByRelevance } from "../lib/utils";
-import { ButtonIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
-import * as AccessibleIcon from "@radix-ui/react-accessible-icon";
-import BackButton from "../ui/BackButton";
-
-function parseSymptoms(rawSymptoms: string | string[] | undefined) {
-  return Array.isArray(rawSymptoms) ? rawSymptoms : []; 
-}
+import { parseParams, rankByRelevance } from "../lib/utils";
+import BackButton from "../ui/back-button";
 
 export default async function Conditions({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const rawConditions = await fetchConditions(parseSymptoms(searchParams['symptom']));
+  const rawConditions = await fetchConditions(parseParams(searchParams['symptom']));
   const conditions = rankByRelevance(rawConditions);
 
   return (
@@ -25,7 +18,7 @@ export default async function Conditions({
           href="/symptoms"
           label="Back"
         />
-        {conditions.length} conditions found
+        {conditions.length} condition{conditions.length > 1 ? 's' : ''} found
       </div>
       <div>
         Click on each medical condition to find out more.
