@@ -1,6 +1,13 @@
 const fs = require('fs');
 const { db } = require('@vercel/postgres');
 
+/**
+ * Creates a conditions table (if not already exists) with the condition names
+ * and symptoms as the columns from a csv file.
+ *
+ * @param {*} client Vercel postgres client object
+ * @returns Response of the create table call and the inserted rows.
+ */
 async function seedConditions(client) {
   try {
     // Create the "conditions" table if it doesn't exist
@@ -50,6 +57,9 @@ async function seedConditions(client) {
   }
 }
 
+/**
+ * Seeds the database with medical conditions and their symptoms.
+ */
 async function main() {
   const client = await db.connect();
 

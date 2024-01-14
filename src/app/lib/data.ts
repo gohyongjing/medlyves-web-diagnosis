@@ -2,6 +2,13 @@ import axios from "axios";
 import { sql } from '@vercel/postgres';
 import { Condition } from "./definitions";
 
+/**
+ * Fetches all condition symptom pairs from the database that involves any of the
+ * specified symptoms.
+ *
+ * @param symptoms Array of symptoms to check for.
+ * @returns Array of objects describing the condition name and symptom.
+ */
 export async function fetchConditions(symptoms: string[]): Promise<Condition[]> {
   try {
     const nestedConditions = await Promise.all(symptoms.map(async symptom => {
@@ -18,6 +25,12 @@ export async function fetchConditions(symptoms: string[]): Promise<Condition[]> 
   }
 }
 
+/**
+ * Fetches the array of drugs for treatment for a specified condition.
+ *
+ * @param condition Condition to find drugs for.
+ * @returns Array of drugs if successfully fetched, an empty array otherwise.
+ */
 export async function fetchDrugs(condition: string): Promise<string[]> {
   return axios.get(`https://candidate-assignment-5hohk5qryq-as.a.run.app/getDrugs/${condition}`)
     .then(response => {
