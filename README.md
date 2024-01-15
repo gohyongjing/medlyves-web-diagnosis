@@ -13,7 +13,7 @@ cd medlyves-web-diagnosis
 npm install
 ```
 
-Set up environment variables
+Set up environment variables in a .env file at the root of the project
 ```
 POSTGRES_URL="postgres://xxxxx"
 POSTGRES_PRISMA_URL="postgres://xxxxx"
@@ -48,22 +48,19 @@ npm run seed
 
 * Medical conditions and symptoms are stored as 2 columns in an SQL database. This allows only related conditions and symptoms to be fetched while allowing further scaling when adding more medical conditions and symptoms with minimal increase in latency in the future.
   * This is based on the assumption that each medical condition has a small number of symptoms (< 20), and fetching conditions based on symptoms would not return a large number of rows
-
-* NextJS prefetching is used to allow clients to automatically fetch subsequent pages while the client is still reading the previous pages.
-
+* NextJS prefetching is used to allow clients to automatically fetch subsequent pages while the user is still reading the previous page.
 * NextJS caching is used to skip database fetching on the server by caching recently requested webpages.
-  * This is based on the assumption that the medical conditions and symptoms are static, and does not change often.
-
+  * This is based on the assumption that the medical conditions and symptoms are static, and does not change often in the database.
 * Search bar only fetches the first 20 symptoms per user input, which can be further expanded with the 'show more' button. This reduces latency by reducing the payload size.
 
-## User Experience
+### User Experience
 
-### Streamlined Process
+#### Streamlined Process
 
 * The diagnosis process is split into multiple pages to streamline the process of finding conditions, selecting conditions, looking through potential diagnosis and finding out related drugs. Each page is kept simple to use for users of all age groups.
   * The user is first greeted by a welcome message that describes the purpose of the website.
   * The user then type in keywords based on their experienced symptoms.
-    * The input in matched based on sub strings of the actual symptoms, allowing greater versatility of search (typing 'cold' matches 'common cold' even though cold appears as the second word).
+    * The input in matched based on sub strings of the actual symptoms, allowing greater versatility of search (typing 'hand' matches 'cold hands and feet' even though 'hands' is the second word).
     * Selected symptoms appear as pills with a close button for ease of removal (users do not need to  type the symptom again to remove them).
     * Options are hiighlighted in blue on hover for ease of selection.
     * If no symptoms are found based on user's input, a user-friendly 'no results' message is given to the user.
@@ -72,7 +69,7 @@ npm run seed
   * The user selects a diagnosis to look at potential drug treatments.
     * If no drug treatments are found, a user-friendly 'not found' message is given to the user, accompanied by alternative advice to consult a doctor.
 
-### Navgiation
+#### Navgiation
 
 * The user can navigate forward using the next buttons, which all provide immediate feedback (such as a loading message and being greyed out when clicked).
 * The Web Doctor logo in the navigation bar allows for quick navigation back to the home apge
