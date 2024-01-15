@@ -12,11 +12,9 @@ export default function DrugList({drugs}: DrugListProps) {
 
   return (
     <div>
-      {
-        !isOpen
+      {!isOpen
         ? <></>
-        : (
-          drugs.length == 0
+        : (drugs.length == 0
           ? <div className="my-2">
             No drugs available. Please consult a doctor for alternative forms of treatment.
           </div>

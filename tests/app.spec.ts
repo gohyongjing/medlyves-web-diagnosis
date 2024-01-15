@@ -1,20 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test('can search for conditions and find conditions', async ({ page }) => {
+test('can navigate to homepage via nav bar', async ({ page }) => {
   await page.goto('http://localhost:3000/');
   await page.getByRole('link', { name: 'Get Started!' }).click();
-  await page.getByPlaceholder('Search symptoms').click();
-  await page.getByPlaceholder('Search symptoms').fill('joint');
-  await page.getByText('joint pain', { exact: true }).click();
-  await page.getByPlaceholder('Search symptoms').click();
-  await page.getByPlaceholder('Search symptoms').fill('vom');
-  await page.getByText('vomiting').click();
-  await page.getByRole('link', { name: 'Diagnose' }).click();
-  await expect(page.getByText('Hepatitis D')).toBeVisible();
-  await expect(page.getByText('Hepatitis E')).toBeVisible();
-
-  // conditions with less symptoms appear below
-  await expect(page.getByText('GERD')).not.toBeInViewport();
+  await page.getByRole('navigation').getByRole('link', { name: 'Web Doctor' }).click();
+  await expect(page.getByText('Welcome')).toBeVisible();
 });
 
 test('can remove selected symptoms', async ({ page }) => {
@@ -34,6 +24,23 @@ test('can expand the dropdown menu by clicking "show more"', async ({ page }) =>
   await expect(page.getByText('cold hands and feets')).toBeVisible();
 });
 
+test('can search for conditions and find conditions', async ({ page }) => {
+  await page.goto('http://localhost:3000/');
+  await page.getByRole('link', { name: 'Get Started!' }).click();
+  await page.getByPlaceholder('Search symptoms').click();
+  await page.getByPlaceholder('Search symptoms').fill('joint');
+  await page.getByText('joint pain', { exact: true }).click();
+  await page.getByPlaceholder('Search symptoms').click();
+  await page.getByPlaceholder('Search symptoms').fill('vom');
+  await page.getByText('vomiting').click();
+  await page.getByRole('link', { name: 'Diagnose' }).click();
+  await expect(page.getByText('Hepatitis D')).toBeVisible();
+  await expect(page.getByText('Hepatitis E')).toBeVisible();
+
+  // conditions with less symptoms appear below
+  await expect(page.getByText('GERD')).not.toBeInViewport();
+});
+
 test('can see drugs needed for medical conditions', async ({ page }) => {
   await page.goto('http://localhost:3000/');
   await page.getByRole('link', { name: 'Get Started!' }).click();
@@ -43,13 +50,6 @@ test('can see drugs needed for medical conditions', async ({ page }) => {
   await expect(page.getByText('ranitidine')).toBeVisible();
   await expect(page.getByText('rabeprazole')).toBeVisible();
   await expect(page.getByText('omeprazole / sodium')).toBeVisible();
-});
-
-test('can navigate to homepage via nav bar', async ({ page }) => {
-  await page.goto('http://localhost:3000/');
-  await page.getByRole('link', { name: 'Get Started!' }).click();
-  await page.getByRole('navigation').getByRole('link', { name: 'Web Doctor' }).click();
-  await expect(page.getByText('Welcome')).toBeVisible();
 });
 
 test('can navigate to symptoms picker via back button', async ({ page }) => {

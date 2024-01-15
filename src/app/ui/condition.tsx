@@ -1,5 +1,4 @@
 import { fetchDrugs } from "../lib/data"
-import Drug from "./drug";
 import DrugList from "./drug-list";
 import Symptom from "./symptom/symptom";
 
@@ -29,9 +28,7 @@ export default async function Condition({
           ))
         }
       </div>
-      <DrugList
-        drugs={drugs}
-      />
+      <DrugList drugs={drugs} />
     </div>
   )
 }
