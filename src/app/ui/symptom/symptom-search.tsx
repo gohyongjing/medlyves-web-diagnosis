@@ -22,7 +22,7 @@ export default function SymptomSearch() {
   }, 300);
 
   return <input
-    className="w-full mt-2 px-2 py-1 bg-gray-50 rounded-t-md"
+    className="w-full mt-2 px-2 py-1 bg-gray-50 rounded-t-md border-b"
     placeholder="Search symptoms"
     defaultValue={searchParams.get('query')?.toString()}
     onChange={handleTextChange}>

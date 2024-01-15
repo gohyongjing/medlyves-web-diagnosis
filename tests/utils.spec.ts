@@ -1,6 +1,19 @@
 import { Condition } from '@/app/lib/definitions';
-import { rankByRelevance } from '@/app/lib/utils';
+import { parseParams, rankByRelevance } from '@/app/lib/utils';
 import { test, expect } from '@playwright/test';
+
+test('can parse params into an array', () => {
+  const tests: [(string | string[] | undefined), string[]][] = [
+    [[], []],
+    [undefined, []],
+    ['paramA', ['paramA']],
+    [['paramA'], ['paramA']],
+    [['paramA', 'paramB', 'paramC'], ['paramA', 'paramB', 'paramC']],
+  ];
+  for (const [input, output] of tests) {
+    expect(parseParams(input)).toEqual(output);
+  }
+});
 
 test('can rank conditions based on number of symptoms', () => {
   const tests: [Condition[], string[]][] = [

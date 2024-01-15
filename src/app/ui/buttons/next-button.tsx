@@ -23,14 +23,16 @@ export default function NextButton({
   const disabledStyle = disabled || clicked;
 
   return <Link
-    href={disabled ? "javascript:void(0)" : href}
+    href={disabled ? "" : href}
     onClick={handleClick}
     className={`m-4 py-2 px-4 text-lg rounded-md ${disabledStyle ? 'disabled bg-neutral-500 text-neutral-50' : 'bg-sky-500 text-neutral-50 hover:bg-sky-600'}`}
   >
     {
-      clicked
-        ? 'Diagnosing...'
-        : 'Diagnose'
+      disabled
+        ? 'Select a symptom before diagnosing'
+        : clicked
+          ? 'Diagnosing...'
+          : 'Diagnose'
     }
   </Link>;
 }

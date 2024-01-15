@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Web Doctor
 
-## Getting Started
+Web Doctor is an online diagnosing tools to check for medical conditions and treatment drugs based on symptoms.
 
-First, run the development server:
+Web Doctor is built with NextJS and deployed on vercel: [medlyves-web-diagnosis.vercel.app](medlyves-web-diagnosis.vercel.app)
+
+## Set Up
+
+clone this github repo and install dependencies
+```bash
+git clone https://github.com/gohyongjing/medlyves-web-diagnosis
+cd medlyves-web-diagnosis
+npm install
+```
+
+Set up environment variables
+```
+POSTGRES_URL="postgres://xxxxx"
+POSTGRES_PRISMA_URL="postgres://xxxxx"
+POSTGRES_URL_NON_POOLING="xxxxx"
+POSTGRES_USER="default"
+POSTGRES_HOST="xxxxx.postgres.vercel-storage.com"
+POSTGRES_PASSWORD="xxxxx"
+POSTGRES_DATABASE="verceldb"
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run end-to-end tests:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Seed the database with medical conditions and symptoms using the csv file in /data
 
-## Learn More
+```bash
+npm run seed
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Design Decisions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Reducing Latency
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+* Medical conditions and symptoms are stored as 2 columns in an SQL database. This allows only related conditions and symptoms to be fetched while allowing further scaling when adding more medical conditions and symptoms with minimal increase in latency in the future.
+  * This is based on the assumption that each medical condition has a small number of symptoms (< 20), and fetching conditions based on symptoms would not return a large number of rows
 
-## Deploy on Vercel
+* NextJS prefetching is used to allow clients to automatically fetch subsequent pages while the client is still reading the previous pages.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* NextJS caching is used to skip database fetching on the server by caching recently requested webpages.
+  * This is based on the assumption that the medical conditions and symptoms are static, and does not change often.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Search bar only fetches the first 20 symptoms per user input, which can be further expanded with the 'show more' button. This reduces latency by reducing the payload size.
+
+## User Experience
+
+### Streamlined Process
+
+* The diagnosis process is split into multiple pages to streamline the process of finding conditions, selecting conditions, looking through potential diagnosis and finding out related drugs. Each page is kept simple to use for users of all age groups.
+  * The user is first greeted by a welcome message that describes the purpose of the website.
+  * The user then type in keywords based on their experienced symptoms.
+    * The input in matched based on sub strings of the actual symptoms, allowing greater versatility of search (typing 'cold' matches 'common cold' even though cold appears as the second word).
+    * Selected symptoms appear as pills with a close button for ease of removal (users do not need to  type the symptom again to remove them).
+    * Options are hiighlighted in blue on hover for ease of selection.
+    * If no symptoms are found based on user's input, a user-friendly 'no results' message is given to the user.
+  * The user looks at the list of potential diagnosis
+    * Medical conditions with more symptoms experienced by the user appears at the top of the list as they are more liekly to be relevant.
+  * The user selects a diagnosis to look at potential drug treatments.
+    * If no drug treatments are found, a user-friendly 'not found' message is given to the user, accompanied by alternative advice to consult a doctor.
+
+### Navgiation
+
+* The user can navigate forward using the next buttons, which all provide immediate feedback (such as a loading message and being greyed out when clicked).
+* The Web Doctor logo in the navigation bar allows for quick navigation back to the home apge
+* The back button from the conditions page to the symptoms page retains the selected symptoms and can be quickly modified as needed.
